@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    font-size: small;
+    background-image: url(back.png);
+    background-size: cover;
+    /* background-position:right center; */
+    /* background-repeat: no-repeat; */
+    width:auto;
+    height:100vh;
+    background-attachment: fixed; /* Fixes the background image in place */
+
+}
+.navbar {
+    display: flex;
+    justify-content: center; /* Center the nav items */
+    width: 100%;
+    background-color: #222; /* Dark background */
+    padding: 10px 0; /* Vertical padding */
+    border-bottom: 3px solid #fff; /* White bottom border for retro look */
+    border-top: 3px solid #fff; /* White bottom border for retro look */
+    padding: 30px 0;
+}
+
+/* Style each navbar link */
+.navbar-link {
+    color: #fff; /* White text color */
+    text-decoration: none;
+    margin: 0 15px; /* Spacing between links */
+    font-size: 19px; /* Font size for retro feel */
+    text-shadow: 2px 2px #ff00ff; /* Purple shadow for a neon glow effect */
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover */
+}
+
+/* Hover effect for links */
+.navbar-link:hover {
+    color: #ff00ff; /* Change text color on hover */
+    text-shadow: 2px 2px #00ff00; /* Change shadow color for hover effect */
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-content {
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc; /* Light grey border for visual separation */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #fff; /* White background for the content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+/* Styling for social icons */
+.social-icons a {
+    margin: 0 15px; /* Increased space between icons */
+    color: #333; /* Icon color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.social-icons a i {
+    font-size: 36px; /* Increased size of the icons */
+    color:#007bff;
+}
+
+.social-icons a i:hover{
+    color: black;
+}
+/* Styling for text elements */
+.intro-text h1 {
+    margin: 10px 0;
+    font-size: 48px; 
+}
+
+.intro-text h1 a{
+    color: #007bff;
+    text-decoration: none;
+}
+
+
+.intro-text h1 a:hover{
+    color: #ff00ff;
+    text-shadow: 2px 2px #00ff00;
+}
+
+.intro-text h2 {
+    margin: 10px 0;
+    font-size: 36px; 
+}
+
+.intro-text p {
+    margin: 10px 0;
+    font-size: 20px; /* Increase font size for paragraphs */
+}
+
+.footerr {
+    display: flex;
+    justify-content:space-evenly;
+    font-family: 'Press Start 2P', cursive;
+    width: 100%;
+    background-color: #222; /* Dark background */
+    padding: 10px 0; /* Vertical padding */
+    border-top: 3px solid #fff; /* White bottom border for retro look */
+    border-bottom: 3px solid #fff; /* White bottom border for retro look */
+    padding: 30px 0;
+}
+
+.footerr-link {
+    color: #fff; /* White text color */
+    text-decoration: none;
+    margin: 0 15px; /* Spacing between links */
+    font-size: 19px; /* Font size for retro feel */
+    text-shadow: 2px 2px #ff00ff; /* Purple shadow for a neon glow effect */
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover */
+}
+.footerr-link:hover {
+    color: #ff00ff; /* Change text color on hover */
+    text-shadow: 2px 2px #00ff00; /* Change shadow color for hover effect */
+}
