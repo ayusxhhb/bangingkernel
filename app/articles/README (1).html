@@ -1,0 +1,177 @@
+<h1><code>DVA-C02</code></h1>
+<h1><code>AWS Well-Architected Framework</code></h1>
+<ul>
+<li>Operational excellence</li>
+<li>Security</li>
+<li>Reliability   </li>
+<li>Performance efficiency</li>
+<li>Cost optimization</li>
+<li>Sustainability</li>
+</ul>
+<h2>The Shared Responsibility Model</h2>
+<p><strong>CUSTOMER</strong> (Responsible for the security <em>in</em> the cloud)</p>
+<ul>
+<li>Customer Data</li>
+<li>Platform, Apps, IAM</li>
+<li>OS, Network &amp; Firewall Configuration</li>
+<li>Client-side data encryption &amp; data integrity authentication</li>
+<li>Server-side encryption</li>
+<li>Network Traffic Protection</li>
+</ul>
+<p><strong>AWS</strong> (Responsible for the security <em>of</em> the cloud)</p>
+<ul>
+<li>Software</li>
+<li>Compute, Storage, Database, Networking</li>
+<li>Hardware</li>
+<li>Regions, AZs, Edge locations</li>
+</ul>
+<h1><code>Identity &amp; Access Management</code></h1>
+<ul>
+<li>Offers a centralized hub of control within AWS and integrates with all other AWS Services </li>
+<li>Allows you to manage users and their level of access to the AWS console.</li>
+</ul>
+<blockquote>
+<p>When you create a new account the <em>root user</em> will be created which will have all permissions and access to all the resources. 
+<strong>It's very important to secure your root user</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><code>User</code> : Individual AWS user.</p>
+<ul>
+<li>5000 IAM users limit per account.</li>
+<li>Any IAM user can only be member of 10 groups.</li>
+</ul>
+</li>
+<li>
+<p><code>Groups</code> : Collection of similar people with shared permissions &amp; users will inherit permissions from the group.</p>
+<p><strong>It's best to inherit permissions from groups so that you don't have to manage them individually</strong></p>
+</li>
+<li>
+<p><code>Roles</code> : Any software service that needs to be granted permissions to do its job. </p>
+<p>It's similar to IAM user, however instead of being assiciated with one person , a role is intended to be assumed by anyone who needs it. Roles are temporary. Also generate temporary credentials for the user.</p>
+<p><em>Two types of policies are attached to a role :</em>
+- Trust Policy : Who can assume this role?
+- Permission Policy : What can they do after assuming the role?</p>
+</li>
+<li>
+<p><code>Policies</code> : A policy is an JSON file in AWS that, when associated with an identity or resource, defines their permissions.</p>
+<ul>
+<li>Inline : Assign policy individually</li>
+<li>Managed : Assign different identities to single policy.</li>
+</ul>
+</li>
+<li>
+<p><code>ARN</code> : Amazon Resource Name</p>
+<ul>
+<li>arn:partition:service:region:account-id:resource-id</li>
+<li>arn:partition:service:region:account-id:resource-type:resource-id</li>
+<li>arn:partition:service:region:account-id:resource-type:resource-id</li>
+</ul>
+</li>
+</ul>
+<h4>Permission Priority</h4>
+<blockquote>
+<p><em>Explicit Deny &gt; Explicit Allow &gt; Default(Implicit Deny)</em></p>
+</blockquote>
+<h4>IAM Security Tools</h4>
+<ul>
+<li><strong>IAM Credentials Report</strong> (account-level) - lists all of the users and the status of their credentials</li>
+<li><strong>IAM Access Advisor</strong> (user-level) - shows the service permissions granted to a user and when those services were last accessed.</li>
+</ul>
+<h1><code>Elastic Compute Cloud</code></h1>
+<p>It's just VMs with on-demand price and scalable compute capacity option.</p>
+<blockquote>
+<p>You will be charged for the AMI, Instance Type, EBS Volume, Networking, IOs, Snapshots.</p>
+</blockquote>
+<p>*<em>Creating KeyPair for ec2 does not cost anything</em></p>
+<p><strong>Pricing Options</strong> : 
+- <em>On-Demand Instance</em> : 
+    - No upfront payment or long-term commitment, just pay by the hour.
+    - Used for Application with short-term , spiky or unpredictable workloads that cannot be interrupted.
+- <em>Spot Instance</em> : 
+    - Uses spare EC2 capacity that is available for less than the On-Demand price.
+    - The Spot price of each instance type in each Availability Zone is set by Amazon EC2, and is adjusted gradually based on the long-term supply of and demand for Spot Instances.
+    - Your Spot Instance runs whenever capacity is available.
+        &gt;To terminate your spot instances you need to first cancel the spot request and then terminate the instances.
+<code>|&lt;----------- Start &lt;-------------------- Stop
+                            |                                           ^
+                            |  |-------- Interrupt -------------------| |                            
+                            |  |                                      | |
+           Create req ---&gt; Spot req -----------&gt; Launch-instances ---&gt; VMs
+                            |                                           |
+                            |                                           |
+                         Request                                     Interrupt
+                         failed</code>
+- <em>Dedicated Hosts</em> : 
+    - An Amazon EC2 Dedicated Host is a physical server fully dedicated for your use.
+    - Amazon EC2 Dedicated Hosts allow you to use your eligible software licenses from vendors such as Microsoft and Oracle on Amazon EC2, so that you get the flexibility and cost effectiveness of using your own licenses, but with the resiliency, simplicity and elasticity of AWS. </p>
+<h2>Instance States</h2>
+<p>| Instance state  | Description                                                                                                                                                                                 | Billing                                                           |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| <code>pending</code>       | The instance is preparing to enter the <code>running</code> state. An instance enters the pending state when it launches for the first time, or when it is started after being in the <code>stopped</code> state. | Not billed                                                        |
+| <code>running</code>       | The instance is running and ready for use.                                                                                                                                                  | Billed                                                            |
+| <code>stopping</code>      | The instance is preparing to be stopped or stop-hibernated.                                                                                                                                 | Not billed if preparing to stop. Billed if preparing to hibernate |
+| <code>stopped</code>       | The instance is shut down and cannot be used. The instance can be started at any time.                                                                                                      | Not billed                                                        |
+| <code>shutting-down</code> | The instance is preparing to be terminated.                                                                                                                                                 | Not billed                                                        |
+| <code>terminated</code>    | The instance has been permanently deleted and cannot be started.                                                                                                                            | Not billed                                                        |</p>
+<h1><code>Simple Storage Service</code></h1>
+<p><strong>S3 billing factors :</strong>
+- Amount of data(in GiB) stored.
+- No. of data retrieval options that you execute(Ex: GET, POST etc).
+- Data Transfer modes and regions.
+- Type of Storage Management and Analytics tool that you choose to adopt.
+- Replication.
+- No. of transition from diff classes.
+- Amount of data processed by S3 Object Lambda.
+- What region or AZ you choose to run your workload in.</p>
+<blockquote>
+<p><em>Get 5GB s3 storage if free tier eligible</em></p>
+</blockquote>
+<h1><code>CloudFormation</code></h1>
+<p>Provisions resources based on the template you provide.</p>
+<p><em>JSON &amp; YAML are used to create CloudFormation templates.</em></p>
+<blockquote>
+<p>Resource is the mandatory field in the template.</p>
+</blockquote>
+<p><strong>Template ex :</strong>
+```yaml
+AWSTemplateFormatVersion: "version date"</p>
+<p>Description:
+    String(Free Text)
+Metadata:
+    template metadata
+Parameters:
+    set of parameters
+Mappings:
+    set of mappings
+Conditions:
+    set of conditions
+Transform:
+    set of transforms
+Resources:
+    set of resources
+Outputs:
+    set of outputs
+```</p>
+<p>A stack is a collection of AWS resources that you create and manage as a single unit using a CloudFormation template.</p>
+<p><strong>*when you upload a yaml template file then it creates a new s3 bucket and stores the template in the cloud</strong></p>
+<h1><code>CloudWatch</code></h1>
+<p>Amazon CloudWatch is basically a metrics repository. </p>
+<p>An AWS service puts metrics into the repository, and you retrieve statistics based on those metrics. </p>
+<p>If you put your own custom metrics into the repository, you can retrieve statistics on these metrics as well.</p>
+<hr />
+<p><strong>High Availability :</strong> Minimize any outages</p>
+<p><strong>Fault Tolerance :</strong> Operate through faults</p>
+<p><strong>Disaster Recovery :</strong> Used when HA &amp; FT don't work</p>
+<hr />
+<h1><code>Domain Name Server</code></h1>
+<p>DNS Client : your laptop, phone, tablet etc.</p>
+<p>Resolver : software on your device, or a server which queries DNS on your behalf</p>
+<p>Zone : A part of DNS Database </p>
+<p>Zonefile : physical database for a zone </p>
+<p>Nameserver : where zonefiles are located </p>
+<p>Root Hints : config points at the root servers IPs and addresses</p>
+<p>Root Server : hosts the DNS root zone </p>
+<p>Root Zone : points at TLD authoritative servers</p>
+<p>gTLD : generic top level domain (.com .org)</p>
+<p>ccTLD : country-code top level domain (.au .in)</p>
